@@ -1,0 +1,16 @@
+{
+	"name": "AWS CLI S3/Minio sandbox",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "awscli",
+	"workspaceFolder": "/workspace",
+
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
+	
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+
+	"extensions": [],
+}

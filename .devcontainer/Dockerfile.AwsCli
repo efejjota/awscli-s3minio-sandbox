@@ -1,0 +1,21 @@
+FROM alpine:3.12.3 as fetcheck
+RUN apk add curl bash
+COPY fetcheck /bin/fetcheck
+RUN chmod +x /bin/fetcheck
+
+FROM fetcheck as awscli
+RUN fetcheck awscliv2.zip \
+    https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip \
+    7ee475f22c1b35cc9e53affbf96a9ffce91706e154a9441d0d39cbf8366b718e
+RUN unzip awscliv2.zip
+
+FROM ubuntu:focal
+COPY --from=awscli aws/ aws/
+RUN ./aws/install
+
+ENV AWS_ACCESS_KEY_ID=
+ENV AWS_SECRET_ACCESS_KEY=
+ENV AWS_DEFAULT_REGION=eu-west-3
+ENV AWS_DEFAULT_OUTPUT=yaml
+
+CMD [ "sleep", "infinity" ]

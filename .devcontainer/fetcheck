@@ -1,0 +1,12 @@
+#!/bin/bash
+
+FILENAME=$1
+URL=$2
+SHA256=$3
+
+checksum=${SHA256}
+curl -Lo ${FILENAME} ${URL}
+
+# Keep exactly 2 spaces between ${SHA256} and ${FILENAME}
+# https://github.com/gliderlabs/docker-alpine/issues/174
+echo "${SHA256}  ${FILENAME}" | sha256sum -c - || exit 1
